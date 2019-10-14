@@ -68,7 +68,7 @@ class BoxObject extends GameObject {
     pop();
   }
   @Override void CollisionEntered(GameObject objectCollided) {
-    if (objectCollided.name =="Obstacle") {
+    if (objectCollided.name =="Obstacle" || objectCollided.name =="Door" ||objectCollided.name =="Enemy") {
       position.x = previousPosition.x;
       position.y = previousPosition.y;
     }

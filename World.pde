@@ -114,7 +114,7 @@ public class World {
   }
   void SpawnEnemies() {
     //enemies.add(new Enemy(new PVector(130, 120), 30, 50));
-    EnemyTurret turret = new EnemyTurret(new PVector(130, 120), 30, 50);
+    EnemyTurret turret = new EnemyTurret(new PVector(130, 120), 50, 50);
     enemies.add(turret);
   } 
 
