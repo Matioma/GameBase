@@ -1,5 +1,6 @@
 class Enemy extends GameObject implements IUnit {
   PVector InitialPosition = new PVector();
+  World worldRef;
 
   public float Speed=1;
 
@@ -8,9 +9,11 @@ class Enemy extends GameObject implements IUnit {
   private float height;
 
   private PVector velocity = new PVector(0, 0);
-  private PVector target = new PVector(0,0);
+  private PVector target = new PVector(0, 0);
+  private GameObject targetObject;
 
-  Enemy(){
+
+  Enemy() {
     super();
   }
 
@@ -29,13 +32,21 @@ class Enemy extends GameObject implements IUnit {
     this.width = width;
     this.height = height;
   }
- 
+
+  void SetTarget(GameObject target) {
+    targetObject= target;
+  }
   
+  void SetWorldRef(World ref){
+    worldRef = ref; 
+  }
+
+
   @Override void update() {
     previousPosition.x = position.x;
     previousPosition.y = position.y;
-  
-    
+
+
 
     position.add(velocity);
   }
@@ -43,7 +54,7 @@ class Enemy extends GameObject implements IUnit {
     MeshData();
   }
   @Override void MeshData() {
-    push();
+    /*push();
     fill(#CBB55A);
 
     translate(position.x+width/2, position.y+height/2);
@@ -53,30 +64,50 @@ class Enemy extends GameObject implements IUnit {
     rectMode(CORNER);
     fill(0);
     rect(position.x+width/2+5, position.y+height-5, 20, 6);//gun
-    
+
     ellipseMode(CORNER);
     fill(#FF4646);
     ellipse(position.x, position.y, width, height);//Body
-    
+
     fill(#CBB55A);
     ellipseMode(CENTER);
     circle(position.x+width/2+10, position.y+height/2, 30); //head
 
 
-    pop();
+    pop();*/
   }
-  
-  float getRotation() {
-    PVector mousePos = new PVector(target.x, target.y);
-    PVector direction = mousePos.sub(position).normalize();
 
-    float radians = atan(direction.y/direction.x);
-    if (direction.x<0) {
-      radians-=PI;
+  float getRotation() {
+
+    if (targetObject!=null) {
+      PVector targetPos =new PVector(targetObject.position.x, targetObject.position.y);
+      PVector direction = targetPos.sub(position).normalize();
+
+      float radians = atan(direction.y/direction.x);
+      if (direction.x<0) {
+        radians-=PI;
+      }
+      return radians;
+    } else {
+      return 0;
     }
-    return radians;
+  }
+
+  void GoTo(PVector target) {
   }
   
-   void GoTo(PVector target) {
+  
+  void Shoot() {
+    PVector mousePos = new PVector(targetObject.position.x, targetObject.position.y);
+    PVector lookDirection =mousePos.sub(position).normalize();
+
+
+
+    PVector bulletPos = new PVector();
+    bulletPos.set(position);
+    bulletPos.add(width/2, height/2).add(lookDirection.mult(50));
+
+    PVector bulletVelocity = lookDirection.normalize().mult(10);
+    worldRef.AddBullet( new Bullet(bulletPos, 5, 5, worldRef, bulletVelocity));
   }
 }

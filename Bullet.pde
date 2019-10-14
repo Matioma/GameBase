@@ -12,6 +12,8 @@ class Bullet extends GameObject {
   private PVector velocity = new PVector(0, 0);
   private PVector target = new PVector(0, 0);
 
+  private String owner;
+
   Bullet() {
     super();
     worldRef=null;
@@ -47,6 +49,10 @@ class Bullet extends GameObject {
     this.width = width;
     this.height = height;
     this.velocity.set(velocity);
+  }
+  Bullet(PVector position, float width, float height, World worldRef, PVector velocity, String owner) {
+    this(position,width,height,worldRef,velocity);
+    this.owner = owner;
   }
 
   @Override void update() {

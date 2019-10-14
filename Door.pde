@@ -34,20 +34,46 @@ class Door extends GameObject {
   @Override void MeshData() {
     if (isActive) {
       push();
-      fill(#817C7C);
-
-      rect(position.x, position.y, width, height);
 
       translate(position.x+width/2, position.y+height/2);
       rotate(0);
       translate(-position.x-width/2, -position.y-height/2);
 
+      push();
+      strokeWeight(0);
+      fill(#AFADAD);
       rect(position.x, position.y, width, height);
-
       pop();
-    }
-    else{
-      println("WTF");
+
+
+      push();
+      fill(#6F6F6F);
+      rect(position.x+10, position.y+10, width-20, height-20);
+      pop();
+
+      fill(#4D6364);
+      //draw circles top
+      for (float  x= position.x+ 5; x< position.x+width; x+=10) {
+        circle( x, position.y+5, 5);
+      }
+      //draw circles bottom
+      for (float  x= position.x+ 5; x< position.x+width; x+=10) {
+        circle( x, position.y+height-5, 5);
+      }
+
+      for (float y = position.y+15; y<= position.y + height-15; y+=10) {
+        circle( position.x+5, y, 5);
+      }
+      for (float y = position.y+15; y<= position.y + height-15; y+=10) {
+        circle( position.x+width-5, y, 5);
+      }
+
+
+
+
+      //println("gm");
+      pop();
+    } else {
     }
   }
 

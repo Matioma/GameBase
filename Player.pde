@@ -131,7 +131,14 @@ class Player extends GameObject implements IUnit {
     }
 
     if (objectCollided.name =="Bullet") {
-    
+      Bullet bullet = (Bullet)objectCollided;
+      
+      if(bullet !=null){
+        if(bullet.owner == "Enemy"){
+           worldRef.defeat();
+        }
+      
+      }
     }
     if(objectCollided.name =="Enemy"){
       worldRef.defeat();  
@@ -230,7 +237,7 @@ class Player extends GameObject implements IUnit {
     bulletPos.add(width/2, height/2).add(lookDirection.mult(50));
 
     PVector bulletVelocity = lookDirection.normalize().mult(10);
-    worldRef.AddBullet( new Bullet(bulletPos, 5, 5, worldRef, bulletVelocity));
+    worldRef.AddBullet( new Bullet(bulletPos, 5, 5, worldRef, bulletVelocity, "Player"));
   }
 
 
