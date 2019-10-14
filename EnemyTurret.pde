@@ -12,6 +12,7 @@ class EnemyTurret extends Enemy {
     collider = new BoxCollider(position.x, position.y, position.x+super.width, position.y+super.height);
 
     name= "Enemy";
+    
   }
   EnemyTurret(PVector position, float width, float height) {
     this(position);
@@ -20,6 +21,11 @@ class EnemyTurret extends Enemy {
     super.height = height;
   }
   @Override void update() {
+
+    if (millis()>= time+shootFrequency) {
+      Shoot();
+      time=millis();
+    }
   }
 
   @Override void draw() {
@@ -28,17 +34,17 @@ class EnemyTurret extends Enemy {
   @Override void MeshData() {
     push();
     fill(#CBB55A);
-    
+
     push();
     translate(position.x+super.width/2, position.y+super.height/2);
     rotate(getRotation());
     translate(-position.x-super.width/2, -position.y-super.height/2);
-    
+
     fill(0);
-    rect(position.x+super.width/2, position.y+5, 20,5);
-    rect(position.x+super.width/2, position.y + super.height -10, 20,5);  
-    
-    
+    rect(position.x+super.width/2, position.y+5, 20, 5);
+    rect(position.x+super.width/2, position.y + super.height -10, 20, 5);  
+
+
     pop();
     /*rectMode(CORNER);
      fill(0);
@@ -59,6 +65,7 @@ class EnemyTurret extends Enemy {
     rotate(radians(75));
     translate(-position.x-super.width/2, -position.y-super.height/2);
     fill(#767676);
+    stroke(#FF0000);
     arc(position.x +super.width/2, position.y + super.height/2, super.width, super.height, 0, PI + PI/6, PIE);
     pop();
 

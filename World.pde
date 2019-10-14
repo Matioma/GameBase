@@ -38,6 +38,7 @@ public class World {
     for (Enemy enemy : enemies) {
       DisplayableObjects.add((IDisplayable)enemy);
       enemy.SetTarget(player);
+      enemy.SetWorldRef(this);
     }
 
     for (BoxObject box : boxes) {
@@ -115,6 +116,8 @@ public class World {
   void SpawnEnemies() {
     //enemies.add(new Enemy(new PVector(130, 120), 30, 50));
     EnemyTurret turret = new EnemyTurret(new PVector(130, 120), 50, 50);
+    enemies.add(turret);
+    turret = new EnemyTurret(new PVector(800, 120), 50, 50);
     enemies.add(turret);
   } 
 

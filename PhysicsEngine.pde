@@ -1,5 +1,5 @@
 class PhysicsEngine{
-    boolean DEBUG = true;  
+    boolean DEBUG = false;  
   
   
     ArrayList<GameObject> SceneObjects;

@@ -12,7 +12,9 @@ class Enemy extends GameObject implements IUnit {
   private PVector target = new PVector(0, 0);
   private GameObject targetObject;
 
-
+  
+  public float shootFrequency =1000;
+  public float time = millis();
   Enemy() {
     super();
   }
@@ -107,7 +109,7 @@ class Enemy extends GameObject implements IUnit {
     bulletPos.set(position);
     bulletPos.add(width/2, height/2).add(lookDirection.mult(50));
 
-    PVector bulletVelocity = lookDirection.normalize().mult(10);
-    worldRef.AddBullet( new Bullet(bulletPos, 5, 5, worldRef, bulletVelocity));
+    PVector bulletVelocity = lookDirection.normalize().mult(5);
+    worldRef.AddBullet( new Bullet(bulletPos, 10, 10, worldRef, bulletVelocity, "Enemy"));
   }
 }

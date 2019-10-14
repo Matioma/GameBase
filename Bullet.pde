@@ -51,7 +51,7 @@ class Bullet extends GameObject {
     this.velocity.set(velocity);
   }
   Bullet(PVector position, float width, float height, World worldRef, PVector velocity, String owner) {
-    this(position,width,height,worldRef,velocity);
+    this(position, width, height, worldRef, velocity);
     this.owner = owner;
   }
 
@@ -68,7 +68,12 @@ class Bullet extends GameObject {
   }
   @Override void MeshData() {
     push();
-    fill(#CBB55A);
+
+    if (owner=="Enemy") {
+      fill(#FF0000);
+    } else {
+      fill(#00FF00);
+    }
 
     translate(position.x+width/2, position.y+height/2);
     //rotate(getRotation());
@@ -80,12 +85,12 @@ class Bullet extends GameObject {
 
     pop();
   }
-  
+
   @Override void CollisionEntered(GameObject objectCollided) {
     if (objectCollided.name =="Obstacle" || objectCollided.name =="BoxObject" || objectCollided.name=="Door" ) {
       worldRef.RemoveBullet(this);
     }
-    if(objectCollided.name == "Enemy"){
+    if (objectCollided.name == "Enemy") {
       worldRef.RemoveBullet(this);
     }
     //velocity.mult(-1);
