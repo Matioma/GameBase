@@ -45,12 +45,12 @@ class Enemy extends GameObject implements IUnit {
 
 
   @Override void update() {
-    previousPosition.x = position.x;
+    /*previousPosition.x = position.x;
     previousPosition.y = position.y;
 
 
 
-    position.add(velocity);
+    position.add(velocity);*/
   }
   @Override void draw() {
     MeshData();

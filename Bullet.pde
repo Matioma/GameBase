@@ -92,8 +92,14 @@ class Bullet extends GameObject {
     }
     if (objectCollided.name == "Enemy") {
       worldRef.RemoveBullet(this);
+
+      try {
+        EnemyKamikaze unit = (EnemyKamikaze)objectCollided;     
+        worldRef.RemoveEnemy((Enemy)objectCollided);
+      }
+      catch(Exception x) {
+      }
     }
-    //velocity.mult(-1);
   }
 
   float getRotation() {

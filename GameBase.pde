@@ -10,12 +10,14 @@ void setup() {
 
 void draw() {
   world.update();
-  world.draw();
+  world.draw(); 
+  Timer.lastFrameTime = millis();  
 }
 
 
 void restart() {
   world = new World();
+  Timer.lastFrameTime = 0;  
 }
 
 

@@ -6,7 +6,11 @@ public class World {
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   ArrayList<BoxObject> boxes = new ArrayList<BoxObject>();  
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+
+
   Platform platform;
+  PVector[] kamikazePositions = {new PVector(120, 120), new PVector(650, 500)};
+
 
   Door door;
 
@@ -16,7 +20,12 @@ public class World {
   boolean paused = false;
 
 
+  float SpawnTimer = 2000;
+  float lastFrameTime =0;
+
+
   World() {
+    //Timer.lastFrameTime = 2000;
     player = new Player(new PVector(100, 250), 30, 50, this);
     door = new Door(new PVector(width-50, 150), 50, 100);
     CreateWalls();
@@ -60,6 +69,12 @@ public class World {
   }
 
   void update() {
+    if (millis() >= lastFrameTime + SpawnTimer) {
+
+      SpawnKamikaze();
+      lastFrameTime = millis();
+    }
+
 
     if (!paused) {
       for (int i=0; i< DisplayableObjects.size(); i++) {
@@ -119,7 +134,22 @@ public class World {
     enemies.add(turret);
     turret = new EnemyTurret(new PVector(800, 120), 50, 50);
     enemies.add(turret);
+
+
+    //EnemyKamikaze kamikaze = new EnemyKamikaze(new PVector(500, 120), 15, 22);
+    //enemies.add(kamikaze);
   } 
+
+  void SpawnKamikaze() {
+    int spawnPositionIndex = (int)random(kamikazePositions.length);
+
+    EnemyKamikaze kamikaze = new EnemyKamikaze(kamikazePositions[spawnPositionIndex], 15, 22);
+    enemies.add(kamikaze);
+    kamikaze.SetTarget(player);
+    kamikaze.SetWorldRef(this);
+    DisplayableObjects.add((IDisplayable)kamikaze);
+    physicsEngine.AddCollider((GameObject)kamikaze);
+  }
 
   void CreateBoxes() {
     boxes.add(new BoxObject(new PVector(500, 450), 50, 50));
@@ -137,6 +167,12 @@ public class World {
     physicsEngine.RemoveCollider((GameObject)bulletToRemove);
   }
 
+  void RemoveEnemy(Enemy enemyToRemove) {
+    enemies.remove(enemyToRemove);
+    DisplayableObjects.remove((IDisplayable)enemyToRemove);
+    physicsEngine.RemoveCollider((GameObject)enemyToRemove);
+  }
+
   void victory() {
     paused = true;
     push();
@@ -144,7 +180,7 @@ public class World {
     textSize(32);
     rectMode(CENTER); 
     fill(127);
-    rect(width/2,height/2, 200,120);
+    rect(width/2, height/2, 200, 120);
     fill(0, 255, 0);
 
     textAlign(CENTER);
@@ -154,12 +190,12 @@ public class World {
   void defeat() {
     paused = true;
     push();
-   String message = "Defeat \n Press R to restart ";
+    String message = "Defeat \n Press R to restart ";
     textSize(32);
     rectMode(CENTER);
     fill(127);
-    rect(width/2,height/2, 200,120);
-    fill(255,0, 0);
+    rect(width/2, height/2, 200, 120);
+    fill(255, 0, 0);
 
     textAlign(CENTER);
     text(message, width/2, height/2, 150, 120);
