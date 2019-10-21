@@ -90,14 +90,16 @@ class Bullet extends GameObject {
     if (objectCollided.name =="Obstacle" || objectCollided.name =="BoxObject" || objectCollided.name=="Door" ) {
       worldRef.RemoveBullet(this);
     }
-    if (objectCollided.name == "Enemy") {
-      worldRef.RemoveBullet(this);
+    if (owner == "Player") {
+      if (objectCollided.name == "Enemy") {
+        worldRef.RemoveBullet(this);
 
-      try {
-        EnemyKamikaze unit = (EnemyKamikaze)objectCollided;     
-        worldRef.RemoveEnemy((Enemy)objectCollided);
-      }
-      catch(Exception x) {
+        try {
+          EnemyKamikaze unit = (EnemyKamikaze)objectCollided;     
+          worldRef.RemoveEnemy((Enemy)objectCollided);
+        }
+        catch(Exception x) {
+        }
       }
     }
   }

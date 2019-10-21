@@ -1,5 +1,6 @@
 class EnemyKamikaze extends Enemy {
-  float kamikazeSpeed = 5;
+  float kamikazeSpeed = 2;
+  PVector previousPosition = new PVector();
 
 
   EnemyKamikaze() {
@@ -22,8 +23,12 @@ class EnemyKamikaze extends Enemy {
     collider = new BoxCollider(position.x, position.y, position.x+super.width, position.y+super.height);
   }
   @Override void update() {
+
+    previousPosition.x = position.x;
+    previousPosition.y = position.y;
+
     if (super.target != null)
-     ToTarget(super.targetObject.position);
+      ToTarget(super.targetObject.position);
   }
 
   @Override void draw() {
@@ -38,10 +43,10 @@ class EnemyKamikaze extends Enemy {
     translate(position.x+super.width/2, position.y+super.height/2);
     rotate(getRotation());
     translate(-position.x-super.width/2, -position.y-super.height/2);
-    
+
     fill(#FFBE08);
-    ellipse(position.x, position.y,super.width, super.height);
-    
+    ellipse(position.x, position.y, super.width, super.height);
+
     fill(#FF0000);
     circle(position.x + super.width/2, position.y + super.width/2, super.width/1.5);
 
@@ -66,5 +71,21 @@ class EnemyKamikaze extends Enemy {
   }
 
   @Override void CollisionEntered(GameObject objectCollided) {
+    if (objectCollided.name =="Obstacle") {
+      position.x = previousPosition.x;
+      position.y = previousPosition.y;
+    }
+    if (objectCollided.name =="BoxObject") {
+      position.x = previousPosition.x;
+      position.y = previousPosition.y;
+    }
+
+    if (objectCollided.name =="Door") {
+      Door door = (Door)objectCollided;
+      if (door.isActive) {
+        position.x = previousPosition.x;
+        position.y = previousPosition.y;
+      }
+    }
   }
 }

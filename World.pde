@@ -9,7 +9,7 @@ public class World {
 
 
   Platform platform;
-  PVector[] kamikazePositions = {new PVector(120, 120), new PVector(650, 500)};
+  PVector[] kamikazePositions = {new PVector(120, 120), new PVector(250, 500), new PVector(800, 500)};
 
 
   Door door;
@@ -26,7 +26,7 @@ public class World {
 
   World() {
     //Timer.lastFrameTime = 2000;
-    player = new Player(new PVector(100, 250), 30, 50, this);
+    player = new Player(new PVector(400, 450), 30, 50, this);
     door = new Door(new PVector(width-50, 150), 50, 100);
     CreateWalls();
     SpawnEnemies();

@@ -1,4 +1,5 @@
 class Enemy extends GameObject implements IUnit {
+  //sdsafloat bulletVelocity = 3;
   PVector InitialPosition = new PVector();
   World worldRef;
 
@@ -13,7 +14,7 @@ class Enemy extends GameObject implements IUnit {
   private GameObject targetObject;
 
   
-  public float shootFrequency =1000;
+  public float shootFrequency =1500;
   public float time = millis();
   Enemy() {
     super();
@@ -109,7 +110,7 @@ class Enemy extends GameObject implements IUnit {
     bulletPos.set(position);
     bulletPos.add(width/2, height/2).add(lookDirection.mult(50));
 
-    PVector bulletVelocity = lookDirection.normalize().mult(5);
+    PVector bulletVelocity = lookDirection.normalize().mult(3);
     worldRef.AddBullet( new Bullet(bulletPos, 10, 10, worldRef, bulletVelocity, "Enemy"));
   }
 }
